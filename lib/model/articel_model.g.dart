@@ -8,9 +8,9 @@ part of 'articel_model.dart';
 
 ArticleModel _$ArticleModelFromJson(Map<String, dynamic> json) => ArticleModel(
       title: json['title'] as String,
-      description: json['description'] as String?,
+      description: json['description'] as String,
       author: json['author'] as String?,
-      url: json['url'] as String?,
+      url: json['url'] as String,
     );
 
 Map<String, dynamic> _$ArticleModelToJson(ArticleModel instance) =>

@@ -13,6 +13,6 @@ abstract class RestClient {
   factory RestClient(Dio dio, {String baseUrl}) = _RestClient;
 
   @GET(
-      "everything?q=tesla&from=2023-04-16&sortBy=publishedAt&apiKey=505e647bbabd48d1ba723b85b0f685c6")
+      "everything?q=tesla&from=2023-04-16&sortBy=publishedAt&apiKey=505e647bbabd48d1ba723b85b0f685c6&pageSize=3")
   Future<ResponseArticles> getArticles();
 }

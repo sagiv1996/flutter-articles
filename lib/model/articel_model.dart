@@ -5,15 +5,15 @@ part 'articel_model.g.dart';
 @JsonSerializable()
 class ArticleModel {
   final String title;
-  final String? description;
+  final String description;
   final String? author;
-  final String? url;
+  final String url;
 
   ArticleModel({
     required this.title,
-    this.description,
+    required this.description,
     this.author,
-    this.url,
+    required this.url,
   });
 
   factory ArticleModel.fromJson(Map<String, dynamic> data) =>
