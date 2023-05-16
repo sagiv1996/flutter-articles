@@ -10,8 +10,8 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
   ArticleBloc() : super(ArticleInitial()) {
     on<LoadArticle>((event, emit) async {
       await Future<void>.delayed(const Duration(seconds: 1));
-      List<Article> bb = List<Article>.empty(growable: true);
-      Article aa = Article(
+      List<ArticleModel> bb = List<ArticleModel>.empty(growable: true);
+      ArticleModel aa = ArticleModel(
           title: 'title',
           description: 'description',
           author: 'author',
