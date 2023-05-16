@@ -24,7 +24,7 @@ class _ArticleState extends State<Article> {
         title: const Text('title'),
       ),
       body: BlocBuilder<ArticleBloc, ArticleState>(builder: (context, state) {
-        if (state is ArticleInitial) {
+        if (state is ArticleInitial || state is ArticleLoadingState) {
           return const CircularProgressIndicator(
             color: Colors.cyanAccent,
           );
@@ -32,9 +32,9 @@ class _ArticleState extends State<Article> {
         if (state is ArticleLoadedState) {
           return ListView.builder(
               controller: _scrollController,
-              itemCount: state.articles.length,
+              itemCount: state.getArticles.length,
               itemBuilder: (BuildContext context, int index) {
-                return ArticleCard(article: state.articles[index]);
+                return ArticleCard(article: state.getArticles[index]);
               });
         }
 
@@ -42,11 +42,13 @@ class _ArticleState extends State<Article> {
       }));
 
   void _scrollListener() {
-    if (_scrollController.offset >=
-            _scrollController.position.maxScrollExtent &&
-        !_scrollController.position.outOfRange) {
-      print("Load!");
-    }
+    // if (_scrollController.offset >=
+    //         _scrollController.position.maxScrollExtent &&
+    //     !_scrollController.position.outOfRange) {
+
+    // }
+    print("Hola!");
+    ArticleBloc().add(LoadArticle());
   }
 
   @override

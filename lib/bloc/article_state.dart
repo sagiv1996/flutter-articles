@@ -12,9 +12,20 @@ class ArticleInitial extends ArticleState {}
 class ArticleLoadingState extends ArticleState {}
 
 class ArticleLoadedState extends ArticleState {
-  final List<ArticleModel> articles;
+  static List<ArticleModel> articles = List<ArticleModel>.empty(growable: true);
 
-  const ArticleLoadedState(this.articles);
+  ArticleLoadedState(articles) {
+    ArticleLoadedState.articles.addAll(articles);
+  }
+  List<ArticleModel> get getArticles {
+    return ArticleLoadedState.articles;
+  }
+
+  static List<ArticleModel> addItem(List<ArticleModel> articles) {
+    // const List<ArticleModel> a =  articlesa.addAll(articles);
+    ArticleLoadedState.articles.addAll(articles);
+    return ArticleLoadedState.articles;
+  }
 }
 
 class ArticleErrorState extends ArticleState {
