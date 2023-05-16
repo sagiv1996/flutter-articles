@@ -12,7 +12,7 @@ part 'rest_client.g.dart';
 abstract class RestClient {
   factory RestClient(Dio dio, {String baseUrl}) = _RestClient;
 
-  @GET(
-      "everything?q=tesla&from=2023-04-16&sortBy=publishedAt&apiKey=505e647bbabd48d1ba723b85b0f685c6&pageSize=50")
-  Future<ResponseArticles> getArticles();
+  @GET("everything?sortBy=publishedAt")
+  Future<ResponseArticles> getArticles(@Query("apikey") String apiKey,
+      @Query('page') int page, @Query('pageSize') int pageSize);
 }

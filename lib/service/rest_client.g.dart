@@ -21,9 +21,17 @@ class _RestClient implements RestClient {
   String? baseUrl;
 
   @override
-  Future<ResponseArticles> getArticles() async {
+  Future<ResponseArticles> getArticles(
+    apiKey,
+    page,
+    pageSize,
+  ) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'apikey': apiKey,
+      r'page': page,
+      r'pageSize': pageSize,
+    };
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio
@@ -34,7 +42,7 @@ class _RestClient implements RestClient {
     )
             .compose(
               _dio.options,
-              'everything?q=tesla&from=2023-04-16&sortBy=publishedAt&apiKey=505e647bbabd48d1ba723b85b0f685c6&pageSize=3',
+              'everything?sortBy=publishedAt',
               queryParameters: queryParameters,
               data: _data,
             )
