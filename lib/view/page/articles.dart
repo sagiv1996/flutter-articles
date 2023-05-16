@@ -28,16 +28,48 @@ class _ArticleState extends State<Article> {
           return const CircularProgressIndicator(
             color: Colors.cyanAccent,
           );
-        }
-        if (state is ArticleLoadedState) {
+        } else if (state is ArticleLoadedState) {
           return ListView.builder(
               controller: _scrollController,
               itemCount: state.getArticles.length,
               itemBuilder: (BuildContext context, int index) {
                 return ArticleCard(article: state.getArticles[index]);
               });
+        } else if (state is ArticleErrorState) {
+          return Center(
+              child: Padding(
+                  padding: EdgeInsets.all(20.0),
+                  child: Card(
+                    elevation: 5.0,
+                    child: Padding(
+                      padding: EdgeInsets.all(20.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(
+                            Icons.error,
+                            color: Colors.red,
+                            size: 64.0,
+                          ),
+                          const SizedBox(height: 20.0),
+                          const Text(
+                            'Error',
+                            style: TextStyle(
+                              fontSize: 24.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 10.0),
+                          Text(
+                            state.errorMessage,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(fontSize: 16.0),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )));
         }
-
         return const Text('End of page');
       }));
 
