@@ -32,33 +32,28 @@ class ArticleCard extends StatelessWidget {
               children: [
                 Text(
                   article.title,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 if (article.description != null)
                   Text(
                     article.description!,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                     ),
                   ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 if (article.content != null)
                   Text(
                     article.content!,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 14,
                       color: Colors.grey,
                     ),
                   ),
-                SizedBox(height: 8),
-                ElevatedButton(
-                  onPressed: null,
-                  child: Text('Read More'),
-                ),
               ],
             ),
           ),
