@@ -16,7 +16,6 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
     on<LoadArticle>((event, emit) async {
       await Future<void>.delayed(const Duration(seconds: 1));
       ResponseArticles result = await client.getArticles();
-      print(result);
       emit(ArticleLoadedState(result.articles));
     });
   }

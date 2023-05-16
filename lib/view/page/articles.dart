@@ -11,6 +11,13 @@ class Article extends StatefulWidget {
 }
 
 class _ArticleState extends State<Article> {
+  final ScrollController _scrollController = ScrollController();
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_scrollListener);
+  }
+
   @override
   Widget build(BuildContext context) => Scaffold(
       appBar: AppBar(
@@ -24,6 +31,7 @@ class _ArticleState extends State<Article> {
         }
         if (state is ArticleLoadedState) {
           return ListView.builder(
+              controller: _scrollController,
               itemCount: state.articles.length,
               itemBuilder: (BuildContext context, int index) {
                 return ArticleCard(article: state.articles[index]);
@@ -32,4 +40,18 @@ class _ArticleState extends State<Article> {
 
         return const Text('End of page');
       }));
+
+  void _scrollListener() {
+    if (_scrollController.offset >=
+            _scrollController.position.maxScrollExtent &&
+        !_scrollController.position.outOfRange) {
+      print("Load!");
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 }
