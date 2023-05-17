@@ -18,13 +18,14 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
   ArticleBloc() : super(ArticleInitial()) {
     on<LoadArticle>((event, emit) async {
       try {
+        if (ArticleLoadedState.isAllRecord) return;
         emit(ArticleLoadingState());
-        await Future<void>.delayed(const Duration(seconds: 1));
-        const int resultsPerRequest = 5;
+        const int resultsPerRequest = 100;
         int pageSize = ArticleLoadedState.articles.length ~/ resultsPerRequest;
         ResponseArticles result =
             await client.getArticles(appKey, pageSize, resultsPerRequest);
-        emit(ArticleLoadedState(result.articles));
+        emit(ArticleLoadedState(
+            result.articles, result.articles.length == result.totalResults));
       } catch (error) {
         emit(const ArticleErrorState(
             'We cant load data. pleas, try again later'));

@@ -13,9 +13,13 @@ class ArticleLoadingState extends ArticleState {}
 
 class ArticleLoadedState extends ArticleState {
   static List<ArticleModel> articles = List<ArticleModel>.empty(growable: true);
+  static bool isAllRecord = false;
 
-  ArticleLoadedState(articles) {
+  ArticleLoadedState(List<ArticleModel> articles, bool isAllRecord) {
     ArticleLoadedState.articles.addAll(articles);
+    if (isAllRecord) {
+      ArticleLoadedState.isAllRecord = true;
+    }
   }
   List<ArticleModel> get getArticles {
     return ArticleLoadedState.articles;
