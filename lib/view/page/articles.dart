@@ -31,9 +31,9 @@ class _ArticleState extends State<Article> {
         } else if (state is ArticleLoadedState) {
           return ListView.builder(
               controller: _scrollController,
-              itemCount: state.getArticles.length,
+              itemCount: state.articles.length,
               itemBuilder: (BuildContext context, int index) {
-                return ArticleCard(article: state.getArticles[index]);
+                return ArticleCard(article: state.articles[index]);
               });
         } else if (state is ArticleErrorState) {
           return Center(
@@ -74,13 +74,12 @@ class _ArticleState extends State<Article> {
       }));
 
   void _scrollListener() {
-    // if (_scrollController.offset >=
-    //         _scrollController.position.maxScrollExtent &&
-    //     !_scrollController.position.outOfRange) {
-
-    // }
-    print("Hola!");
-    ArticleBloc().add(LoadArticle());
+    if (_scrollController.offset >=
+            _scrollController.position.maxScrollExtent &&
+        !_scrollController.position.outOfRange) {
+      BlocProvider.of<ArticleBloc>(context).add(RefreshArticlesEvent());
+    }
+    ;
   }
 
   @override

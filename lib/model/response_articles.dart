@@ -5,7 +5,7 @@ part 'response_articles.g.dart';
 
 @JsonSerializable()
 class ResponseArticles {
-  String status;
+  String? status;
   int totalResults;
   List<ArticleModel> articles;
   ResponseArticles(this.status, this.totalResults, this.articles);

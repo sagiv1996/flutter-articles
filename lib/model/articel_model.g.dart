@@ -7,10 +7,10 @@ part of 'articel_model.dart';
 // **************************************************************************
 
 ArticleModel _$ArticleModelFromJson(Map<String, dynamic> json) => ArticleModel(
-      title: json['title'] as String,
-      description: json['description'] as String,
+      title: json['title'] as String?,
+      description: json['description'] as String?,
       author: json['author'] as String?,
-      url: json['url'] as String,
+      url: json['url'] as String?,
       content: json['content'] as String?,
       urlToImage: json['urlToImage'] as String?,
     );

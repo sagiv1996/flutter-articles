@@ -1,4 +1,4 @@
-import 'dart:ffi';
+
 
 import 'package:articles/model/articel_model.dart';
 import 'package:retrofit/retrofit.dart';
@@ -12,7 +12,8 @@ part 'rest_client.g.dart';
 abstract class RestClient {
   factory RestClient(Dio dio, {String baseUrl}) = _RestClient;
 
-  @GET("everything?sortBy=publishedAt")
+
+  @GET("top-headlines?country=us")
   Future<ResponseArticles> getArticles(@Query("apikey") String apiKey,
       @Query('page') int page, @Query('pageSize') int pageSize);
 }

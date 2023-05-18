@@ -8,7 +8,7 @@ part of 'response_articles.dart';
 
 ResponseArticles _$ResponseArticlesFromJson(Map<String, dynamic> json) =>
     ResponseArticles(
-      json['status'] as String,
+      json['status'] as String?,
       json['totalResults'] as int,
       (json['articles'] as List<dynamic>)
           .map((e) => ArticleModel.fromJson(e as Map<String, dynamic>))

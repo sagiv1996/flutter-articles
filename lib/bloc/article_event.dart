@@ -3,7 +3,7 @@ part of 'article_bloc.dart';
 @immutable
 abstract class ArticleEvent {}
 
-class LoadArticle extends ArticleEvent {}
+class LoadArticles extends ArticleEvent {}
 
 class ClearArticlesEvent extends ArticleEvent {}
 

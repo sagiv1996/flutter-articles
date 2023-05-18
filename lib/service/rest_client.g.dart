@@ -42,7 +42,7 @@ class _RestClient implements RestClient {
     )
             .compose(
               _dio.options,
-              'everything?sortBy=publishedAt',
+              'top-headlines?country=us',
               queryParameters: queryParameters,
               data: _data,
             )

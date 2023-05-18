@@ -14,7 +14,9 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => BlocProvider(
-        create: (context) => ArticleBloc()..add(LoadArticle()),
+        create: (context) => ArticleBloc()..add(LoadArticles()),
         child: const MaterialApp(home: Article()),
       );
+
+
 }
