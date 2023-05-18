@@ -25,15 +25,48 @@ class _ArticleState extends State<Article> {
       ),
       body: BlocBuilder<ArticleBloc, ArticleState>(builder: (context, state) {
         if (state is ArticleInitial || state is ArticleLoadingState) {
-          return const CircularProgressIndicator(
-            color: Colors.cyanAccent,
+          return Container(
+            width: double.infinity,
+            height: double.infinity,
+            color: Colors.grey[200],
+            child: Center(
+              child: Card(
+                elevation: 2.0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      CircularProgressIndicator(),
+                      SizedBox(height: 16.0),
+                      Text(
+                        'Loading...',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           );
         } else if (state is ArticleLoadedState) {
-          return ListView.builder(
-              controller: _scrollController,
-              itemCount: state.articles.length,
-              itemBuilder: (BuildContext context, int index) {
-                return ArticleCard(article: state.articles[index]);
+          return RefreshIndicator(
+              child: ListView.builder(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  controller: _scrollController,
+                  itemCount: state.articles.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ArticleCard(article: state.articles[index]);
+                  }),
+              onRefresh: () async {
+                BlocProvider.of<ArticleBloc>(context)
+                    .add(RefreshArticlesEvent());
               });
         } else if (state is ArticleErrorState) {
           return Center(
@@ -77,7 +110,7 @@ class _ArticleState extends State<Article> {
     if (_scrollController.offset >=
             _scrollController.position.maxScrollExtent &&
         !_scrollController.position.outOfRange) {
-      BlocProvider.of<ArticleBloc>(context).add(RefreshArticlesEvent());
+      BlocProvider.of<ArticleBloc>(context).add(LoadArticles());
     }
     ;
   }
