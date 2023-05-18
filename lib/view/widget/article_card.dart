@@ -17,14 +17,14 @@ class ArticleCard extends StatelessWidget {
         children: [
           if (article.urlToImage != null)
             ClipRRect(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
-              child: Image.network(
-                article.urlToImage!,
-                fit: BoxFit.cover,
-                height: 150,
-                width: double.infinity,
-              ),
-            ),
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(10)),
+                child: Image.network(
+                  article.urlToImage!,
+                  fit: BoxFit.cover,
+                  height: 150,
+                  width: double.infinity,
+                )),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(

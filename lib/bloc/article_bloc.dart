@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:articles/model/response_articles.dart';
 import 'package:articles/service/rest_client.dart';
 import 'package:bloc/bloc.dart';
