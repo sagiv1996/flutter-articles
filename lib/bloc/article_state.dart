@@ -14,12 +14,11 @@ class ArticleLoadingState extends ArticleState {}
 class ArticleLoadedState extends ArticleState {
   final List<ArticleModel> articles;
   const ArticleLoadedState({required this.articles});
-
-
 }
 
 class ArticleErrorState extends ArticleState {
+  final String errorTitle;
   final String errorMessage;
 
-  const ArticleErrorState(this.errorMessage);
+  const ArticleErrorState(this.errorTitle, this.errorMessage);
 }

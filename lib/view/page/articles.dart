@@ -1,5 +1,6 @@
 import 'package:articles/bloc/article_bloc.dart';
 import 'package:articles/view/widget/article_card.dart';
+import 'package:articles/view/widget/error_card.dart';
 import 'package:articles/view/widget/loading_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,8 +41,8 @@ class _ArticleState extends State<Article> {
                         child: Padding(
                           padding: EdgeInsets.all(16.0),
                           child: CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(Colors
-                                .blue), // Set the color of the progress indicator
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(Colors.blue),
                           ),
                         ),
                       );
@@ -53,39 +54,10 @@ class _ArticleState extends State<Article> {
                     .add(RefreshArticlesEvent());
               });
         } else if (state is ArticleErrorState) {
-          return Center(
-              child: Padding(
-                  padding: EdgeInsets.all(20.0),
-                  child: Card(
-                    elevation: 5.0,
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Icon(
-                            Icons.error,
-                            color: Colors.red,
-                            size: 64.0,
-                          ),
-                          const SizedBox(height: 20.0),
-                          const Text(
-                            'Error',
-                            style: TextStyle(
-                              fontSize: 24.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 10.0),
-                          Text(
-                            state.errorMessage,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(fontSize: 16.0),
-                          ),
-                        ],
-                      ),
-                    ),
-                  )));
+          return ErrorCard(
+            errorTitle: state.errorTitle,
+            errorMessage: state.errorMessage,
+          );
         }
         return const Text('End of page');
       }));
