@@ -42,24 +42,10 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
 
     on<RefreshArticlesEvent>((event, emit) async {
       if (isAllArticles) return;
-      // emit(ArticleLoadingState());
-      print(pageSize.toString());
-      print(articles.length.toString());
-      print(resultsPerRequest.toString());
-      ArticleModel a = ArticleModel(
-        title: 'a',
-        description: 'a',
-        url: 'url',
-      );
-      ArticleModel b = ArticleModel(title: 'b', description: 'b', url: 'url1');
-
-      ResponseArticles aa =
+      ResponseArticles result =
           await client.getArticles(appKey, pageSize, resultsPerRequest);
-      // List<ArticleModel>.empty(growable: true);
-      // aa.add(a);
-      // aa.add(b);
-      articles.addAll(aa.articles);
-      updateIsAllArticles(aa.totalResults);
+      articles.addAll(result.articles);
+      updateIsAllArticles(result.totalResults);
       emit(ArticleLoadedState(articles: articles));
     });
   }
