@@ -25,6 +25,7 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
   ArticleBloc() : super(ArticleInitial()) {
     on<LoadArticles>((event, emit) async {
       try {
+        if (articles.isEmpty) emit(ArticleLoadingState());
         if (isAllArticles) return;
         ResponseArticles result =
             await client.getArticles(appKey, pageSize, resultsPerRequest);
@@ -39,23 +40,17 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
     });
 
     on<RefreshArticlesEvent>((event, emit) async {
-      emit(ArticleLoadingState());
+      articles.clear();
       ResponseArticles result =
           await client.getArticles(appKey, pageSize, resultsPerRequest);
       articles = result.articles;
       updateIsAllArticles(result.totalResults);
       emit(ArticleLoadedState(articles: articles));
     });
-
-    on<ClearArticlesEvent>((event, emit) async {
-      emit(ArticleLoadedState(articles: List.empty()));
-    });
   }
 
   void updateIsAllArticles(int totalResult) {
-    if (articles.length >= totalResult) {
-      isAllArticles = true;
-    }
+    isAllArticles = articles.length >= totalResult;
   }
 
   int get pageSize {

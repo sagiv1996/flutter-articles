@@ -1,5 +1,6 @@
 import 'package:articles/bloc/article_bloc.dart';
 import 'package:articles/view/widget/article_card.dart';
+import 'package:articles/view/widget/loading_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -25,36 +26,7 @@ class _ArticleState extends State<Article> {
       ),
       body: BlocBuilder<ArticleBloc, ArticleState>(builder: (context, state) {
         if (state is ArticleInitial || state is ArticleLoadingState) {
-          return Container(
-            width: double.infinity,
-            height: double.infinity,
-            color: Colors.grey[200],
-            child: Center(
-              child: Card(
-                elevation: 2.0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-                child: const Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      CircularProgressIndicator(),
-                      SizedBox(height: 16.0),
-                      Text(
-                        'Loading...',
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          );
+          return const LoadingCard();
         } else if (state is ArticleLoadedState) {
           return RefreshIndicator(
               child: ListView.builder(
@@ -62,6 +34,18 @@ class _ArticleState extends State<Article> {
                   controller: _scrollController,
                   itemCount: state.articles.length,
                   itemBuilder: (BuildContext context, int index) {
+                    if (index == state.articles.length - 1 &&
+                        !ArticleBloc.isAllArticles) {
+                      return const Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(Colors
+                                .blue), // Set the color of the progress indicator
+                          ),
+                        ),
+                      );
+                    }
                     return ArticleCard(article: state.articles[index]);
                   }),
               onRefresh: () async {
@@ -75,7 +59,7 @@ class _ArticleState extends State<Article> {
                   child: Card(
                     elevation: 5.0,
                     child: Padding(
-                      padding: EdgeInsets.all(20.0),
+                      padding: const EdgeInsets.all(20.0),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
