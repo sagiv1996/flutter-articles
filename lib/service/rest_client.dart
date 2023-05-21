@@ -14,10 +14,4 @@ abstract class RestClient {
   @GET("top-headlines?country=us")
   Future<ResponseArticles> getArticles(@Query("apikey") String apiKey,
       @Query('page') int page, @Query('pageSize') int pageSize);
-
-  @GET("top-headlines?country=us")
-  Future<ResponseArticlesWidthDrift> getArticlesFromDb(
-      @Query("apikey") String apiKey,
-      @Query('page') int page,
-      @Query('pageSize') int pageSize);
 }

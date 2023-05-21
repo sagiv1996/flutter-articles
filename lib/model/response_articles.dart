@@ -17,12 +17,3 @@ class ResponseArticles {
 
   Map<String, dynamic> toJson() => _$ResponseArticlesToJson(this);
 }
-
-@JsonSerializable()
-class ResponseArticlesWidthDrift {
-  Future<List<ArticleTableData>> articles;
-  ResponseArticlesWidthDrift(this.articles);
-
-  factory ResponseArticlesWidthDrift.fromJson(Map<String, dynamic> data) =>
-      _$ResponseArticlesWidthDriftFromJson(data);
-}

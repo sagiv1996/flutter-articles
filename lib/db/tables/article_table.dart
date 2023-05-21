@@ -1,12 +1,11 @@
 import 'package:articles/model/articel_model.dart';
 import 'package:drift/drift.dart';
-import 'package:json_annotation/json_annotation.dart';
 
-@JsonSerializable()
+@UseRowClass(ArticleModel)
 class ArticleTable extends Table {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get title => text()();
   TextColumn get description => text()();
-  TextColumn get content => text().nullable()();
-  TextColumn get urlToImage => text().nullable()();
+  TextColumn get content => text()();
+  TextColumn get urlToImage => text()();
 }

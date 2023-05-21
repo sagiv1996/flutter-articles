@@ -16,12 +16,19 @@ class MyDatabase extends _$MyDatabase {
   @override
   int get schemaVersion => 1;
 
-  Future<List<ArticleTableData>> getAllArticle() => select(articleTable).get();
+  Future<List<ArticleModel>> getAllArticle() => select(articleTable).get();
 
   Future deleteArticles() => batch((batch) => batch.deleteAll(articleTable));
 
-  Future insertArticles(List<ArticleTableData> articles) =>
-      batch((batch) => batch.insertAll(articleTable, articles));
+  Future insertArticles(List<ArticleModel> articles) async {
+    for (var article in articles) {
+      await into(articleTable).insert(ArticleTableCompanion.insert(
+          title: article.title.toString(),
+          description: article.description.toString(),
+          content: article.content.toString(),
+          urlToImage: article.urlToImage.toString()));
+    }
+  }
 }
 
 LazyDatabase _openConnection() {

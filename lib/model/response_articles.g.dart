@@ -21,15 +21,3 @@ Map<String, dynamic> _$ResponseArticlesToJson(ResponseArticles instance) =>
       'totalResults': instance.totalResults,
       'articles': instance.articles,
     };
-
-ResponseArticlesWidthDrift _$ResponseArticlesWidthDriftFromJson(
-        Map<String, dynamic> json) =>
-    ResponseArticlesWidthDrift(
-      json['articles'] as Future<List<ArticleTableData>>,
-    );
-
-Map<String, dynamic> _$ResponseArticlesWidthDriftToJson(
-        ResponseArticlesWidthDrift instance) =>
-    <String, dynamic>{
-      'articles': instance.articles,
-    };
