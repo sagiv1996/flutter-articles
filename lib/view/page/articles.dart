@@ -54,15 +54,18 @@ class _ArticleState extends State<Article> {
                     .add(RefreshArticlesEvent());
               });
         } else if (state is ArticleErrorState) {
-          // return ErrorCard(
-          //   errorTitle: state.errorTitle,
-          //   errorMessage: state.errorMessage,
-          // );
           return ListView.builder(
               physics: const AlwaysScrollableScrollPhysics(),
               controller: _scrollController,
               itemCount: state.articles.length,
               itemBuilder: (BuildContext context, int index) {
+                if (index == state.articles.length - 1 &&
+                    !ArticleBloc.isAllArticles) {
+                  return ErrorCard(
+                    errorTitle: state.errorTitle,
+                    errorMessage: state.errorMessage,
+                  );
+                }
                 return ArticleCard(article: state.articles[index]);
               });
         }
