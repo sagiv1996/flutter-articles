@@ -17,6 +17,11 @@ class MyDatabase extends _$MyDatabase {
   int get schemaVersion => 1;
 
   Future<List<ArticleTableData>> getAllArticle() => select(articleTable).get();
+
+  Future deleteArticles() => batch((batch) => batch.deleteAll(articleTable));
+
+  Future insertArticles(List<ArticleTableData> articles) =>
+      batch((batch) => batch.insertAll(articleTable, articles));
 }
 
 LazyDatabase _openConnection() {

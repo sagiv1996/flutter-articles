@@ -24,24 +24,34 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
   ArticleBloc() : super(ArticleInitial()) {
     on<LoadArticles>((event, emit) async {
       try {
-        throw ('Error@@@');
         if (articles.isEmpty) emit(ArticleLoadingState());
         if (isAllArticles) return;
         ResponseArticles result =
             await client.getArticles(appKey, pageSize, resultsPerRequest);
 
+        List<ArticleTableData> articles1 =
+            List<ArticleTableData>.empty(growable: true);
+
+        for (var element in result.articles) {
+          articles1.add(ArticleTableData(
+              id: articles1.length,
+              title: element.title.toString(),
+              description: element.description.toString(),
+              content: element.content.toString(),
+              urlToImage: element.urlToImage.toString()));
+        }
+
+        await MyDatabase().deleteArticles();
+        await MyDatabase().insertArticles(articles1);
         articles.addAll(result.articles);
         updateIsAllArticles(result.totalResults);
         emit(ArticleLoadedState(articles: articles));
       } catch (error) {
-        print("Before load from DB");
         List<ArticleTableData> a = await MyDatabase().getAllArticle();
-        print("After load from DB");
         List<ArticleModel> articles = List<ArticleModel>.empty(growable: true);
-        a.forEach((element) {
+        for (var element in a) {
           articles.add(ArticleModel.fromJson(element.toJson()));
-        });
-        print("After set data");
+        }
         emit(ArticleErrorState('We cant load data. pleas, try again later',
             error.toString(), articles));
       }
