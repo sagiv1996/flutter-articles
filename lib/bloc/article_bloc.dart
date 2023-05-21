@@ -1,3 +1,4 @@
+import 'package:articles/db/db.dart';
 import 'package:articles/model/response_articles.dart';
 import 'package:articles/service/rest_client.dart';
 import 'package:bloc/bloc.dart';
@@ -23,6 +24,7 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
   ArticleBloc() : super(ArticleInitial()) {
     on<LoadArticles>((event, emit) async {
       try {
+        throw ('Error@@@');
         if (articles.isEmpty) emit(ArticleLoadingState());
         if (isAllArticles) return;
         ResponseArticles result =
@@ -32,8 +34,16 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
         updateIsAllArticles(result.totalResults);
         emit(ArticleLoadedState(articles: articles));
       } catch (error) {
-        emit(ArticleErrorState(
-            'We cant load data. pleas, try again later', error.toString()));
+        print("Before load from DB");
+        List<ArticleTableData> a = await MyDatabase().getAllArticle();
+        print("After load from DB");
+        List<ArticleModel> articles = List<ArticleModel>.empty(growable: true);
+        a.forEach((element) {
+          articles.add(ArticleModel.fromJson(element.toJson()));
+        });
+        print("After set data");
+        emit(ArticleErrorState('We cant load data. pleas, try again later',
+            error.toString(), articles));
       }
     });
 
@@ -46,8 +56,8 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
         updateIsAllArticles(result.totalResults);
         emit(ArticleLoadedState(articles: articles));
       } catch (error) {
-        emit(ArticleErrorState(
-            'We cant load data. pleas, try again later', error.toString()));
+        emit(ArticleErrorState('We cant load data. pleas, try again later',
+            error.toString(), List.empty()));
       }
     });
   }

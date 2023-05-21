@@ -54,10 +54,17 @@ class _ArticleState extends State<Article> {
                     .add(RefreshArticlesEvent());
               });
         } else if (state is ArticleErrorState) {
-          return ErrorCard(
-            errorTitle: state.errorTitle,
-            errorMessage: state.errorMessage,
-          );
+          // return ErrorCard(
+          //   errorTitle: state.errorTitle,
+          //   errorMessage: state.errorMessage,
+          // );
+          return ListView.builder(
+              physics: const AlwaysScrollableScrollPhysics(),
+              controller: _scrollController,
+              itemCount: state.articles.length,
+              itemBuilder: (BuildContext context, int index) {
+                return ArticleCard(article: state.articles[index]);
+              });
         }
         return const Text('End of page');
       }));

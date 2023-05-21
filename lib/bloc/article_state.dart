@@ -19,6 +19,7 @@ class ArticleLoadedState extends ArticleState {
 class ArticleErrorState extends ArticleState {
   final String errorTitle;
   final String errorMessage;
+  final List<ArticleModel> articles;
 
-  const ArticleErrorState(this.errorTitle, this.errorMessage);
+  const ArticleErrorState(this.errorTitle, this.errorMessage, this.articles);
 }

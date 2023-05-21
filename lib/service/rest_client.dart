@@ -1,3 +1,5 @@
+import 'package:articles/db/db.dart';
+import 'package:articles/db/tables/article_table.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart';
 
@@ -12,4 +14,10 @@ abstract class RestClient {
   @GET("top-headlines?country=us")
   Future<ResponseArticles> getArticles(@Query("apikey") String apiKey,
       @Query('page') int page, @Query('pageSize') int pageSize);
+
+  @GET("top-headlines?country=us")
+  Future<ResponseArticlesWidthDrift> getArticlesFromDb(
+      @Query("apikey") String apiKey,
+      @Query('page') int page,
+      @Query('pageSize') int pageSize);
 }
