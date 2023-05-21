@@ -1,4 +1,4 @@
-import 'package:articles/db/db.dart';
+
 import 'package:json_annotation/json_annotation.dart';
 
 part 'articel_model.g.dart';

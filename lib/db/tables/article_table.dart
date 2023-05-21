@@ -1,5 +1,4 @@
 import 'package:drift/drift.dart';
-import 'package:json_annotation/json_annotation.dart';
 
 class ArticleTable extends Table {
   IntColumn get id => integer().autoIncrement()();
