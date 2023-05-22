@@ -34,8 +34,8 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
         articles.addAll(result.articles);
         updateIsAllArticles(result.totalResults);
 
-        // await md.insertArticles(result.articles);
         emit(ArticleLoadedState(articles: articles));
+        await md.insertArticles(result.articles);
       } catch (error) {
         emit(ArticleErrorState('We cant load data. pleas, try again later',
             error.toString(), articles));
@@ -45,15 +45,14 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
     on<RefreshArticlesEvent>((event, emit) async {
       try {
         articles.clear();
-        print(pageSize.toString());
         ResponseArticles result =
             await client.getArticles(appKey, pageSize, resultsPerRequest);
         articles = result.articles;
         updateIsAllArticles(result.totalResults);
         emit(ArticleLoadedState(articles: result.articles));
-        // await md.insertArticles(result.articles);
+        await md.insertArticles(result.articles);
       } catch (error) {
-        // await md.insertArticles(articles);
+        await md.insertArticles(articles);
         emit(ArticleErrorState('We cant load data. pleas, try again later',
             error.toString(), articles));
       }
@@ -61,8 +60,6 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
   }
 
   void updateIsAllArticles(int totalResult) {
-    print(articles.length.toString());
-    print(totalResult.toString());
     isAllArticles = articles.length >= totalResult;
   }
 
