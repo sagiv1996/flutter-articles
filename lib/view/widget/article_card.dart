@@ -23,6 +23,15 @@ class ArticleCard extends StatelessWidget {
                   fit: BoxFit.cover,
                   height: 150,
                   width: double.infinity,
+                  errorBuilder: (context, error, stackTrace) {
+                    // Error handling logic goes here
+                    return Center(
+                      child: Text(
+                        'Error loading image',
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    );
+                  },
                 )),
           Padding(
             padding: const EdgeInsets.all(8.0),

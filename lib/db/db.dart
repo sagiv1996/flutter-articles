@@ -18,8 +18,6 @@ class MyDatabase extends _$MyDatabase {
 
   Future<List<ArticleModel>> getAllArticle() => select(articleTable).get();
 
-  Future deleteArticles() => batch((batch) => batch.deleteAll(articleTable));
-
   Future insertArticles(List<ArticleModel> articles) async {
     for (var article in articles) {
       await into(articleTable).insert(ArticleTableCompanion.insert(

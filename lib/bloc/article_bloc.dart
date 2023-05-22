@@ -18,6 +18,7 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
   static const int resultsPerRequest = 10;
   static bool isAllArticles = false;
   final client = RestClient(Dio());
+  MyDatabase md = MyDatabase();
 
   static List<ArticleModel> articles = List<ArticleModel>.empty(growable: true);
 
@@ -32,12 +33,10 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
 
         articles.addAll(result.articles);
         updateIsAllArticles(result.totalResults);
-        emit(ArticleLoadedState(articles: articles));
 
-        await MyDatabase().deleteArticles();
-        await MyDatabase().insertArticles(result.articles);
+        // await md.insertArticles(result.articles);
+        emit(ArticleLoadedState(articles: articles));
       } catch (error) {
-        List<ArticleModel> articles = await MyDatabase().getAllArticle();
         emit(ArticleErrorState('We cant load data. pleas, try again later',
             error.toString(), articles));
       }
@@ -46,15 +45,15 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
     on<RefreshArticlesEvent>((event, emit) async {
       try {
         articles.clear();
+        print(pageSize.toString());
         ResponseArticles result =
             await client.getArticles(appKey, pageSize, resultsPerRequest);
-
+        articles = result.articles;
         updateIsAllArticles(result.totalResults);
         emit(ArticleLoadedState(articles: result.articles));
-
-        await MyDatabase().insertArticles(result.articles);
+        // await md.insertArticles(result.articles);
       } catch (error) {
-        List<ArticleModel> articles = await MyDatabase().getAllArticle();
+        // await md.insertArticles(articles);
         emit(ArticleErrorState('We cant load data. pleas, try again later',
             error.toString(), articles));
       }
@@ -62,6 +61,8 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
   }
 
   void updateIsAllArticles(int totalResult) {
+    print(articles.length.toString());
+    print(totalResult.toString());
     isAllArticles = articles.length >= totalResult;
   }
 

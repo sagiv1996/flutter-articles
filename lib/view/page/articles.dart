@@ -59,8 +59,7 @@ class _ArticleState extends State<Article> {
               controller: _scrollController,
               itemCount: state.articles.length,
               itemBuilder: (BuildContext context, int index) {
-                if (index == state.articles.length - 1 &&
-                    !ArticleBloc.isAllArticles) {
+                if (index == 0 && !ArticleBloc.isAllArticles) {
                   return ErrorCard(
                     errorTitle: state.errorTitle,
                     errorMessage: state.errorMessage,
